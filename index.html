@@ -1,0 +1,98 @@
+ <html>
+    <head>
+        <Title>Rock Paper Scissors vs Computer AI</Title>
+    </head>
+    <body>
+        <center>
+        <br><br><h1>Rock Paper Scissors<abbr>(RPS)</abbr></h1>
+        <label>Your Progress :</label>
+        <progress id = "progressbar" min="0" max="100" value="0"></progress><br><br>
+        <small>Choose Your Move:</small><br><br>
+        <button onclick="play('Rock')">Rock</button>
+        <button onclick="play('Paper')">Paper</button>
+        <button onclick="play('Scissors')">Scissors</button>
+        <button onclick="Clear('Clear')">Clear</button>
+        <p id="score"></p>
+        <p id="player"></p>
+        <p id="computer"></p>
+        <p id="result"></p>
+        <button command="show-modal" commandfor="dialog">Credits</button><br>
+        <br> <br> <details>
+            <summary>How To Play</summary>
+            Choose one of the moves to play.<br>The computer will choose random move.
+            <br> Your goal is to hit 100 wins against the computer.
+            <br> This is an easy game. If you lose too much, you are truly a fool. 
+            <br> Good Luck :).
+        </details>
+        <dialog id="dialog">
+            <p>This project is created by <mark> Wahdan.</mark> 🔥</p>
+            <p><br> Special thanks to my mentor <mark>Amr Loksha</mark> for being cool. 🤍
+            </p>
+            <em>Shoutout to <mark> Ali Ahmed </mark> for helping me. 🐒</em><br><br>
+            <button commandfor="dialog" command="close">Close</button>
+        </dialog>
+        </center>
+        <script> 
+        let player_score = 0;
+        let computer_score = 0;
+        const result = document.getElementById("result");
+            function play(playerchoice) {
+                let choices=['Rock','Paper','Scissors'];
+                let computerchoice = choices[Math.floor(Math.random()* 3)];
+                document.getElementById("player").textContent= 
+                "You Chose: " + playerchoice;
+                document.getElementById("computer").textContent=
+                "AI Chose: " + computerchoice;
+                if (playerchoice === computerchoice) {
+                    document.getElementById('result').textContent= "✨Draw ";
+                    document.getElementById("score").textContent= 'Player Score = ' + player_score + " || Computer Score = " + computer_score; 
+                }
+                else if (
+                    (playerchoice === 'Rock' && computerchoice === 'Scissors') ||
+                    (playerchoice === 'Scissors' && computerchoice === 'Paper') ||
+                    (playerchoice === 'Paper' && computerchoice === 'Rock') )  
+                    {
+                        document.getElementById("result").textContent= "🎊You Won!";                        
+                        player_score = player_score + 1;
+                        progress();
+                        document.getElementById("score").textContent= 'Player Score = ' + player_score + " || Computer Score = " + computer_score; }
+                else if (
+                    (computerchoice === 'Rock' && playerchoice === 'Scissors') ||
+                    (computerchoice === 'Scissors' && playerchoice === 'Paper') ||
+                    (computerchoice === 'Paper' && playerchoice === 'Rock') )
+                    {
+                  document.getElementById("result").textContent= "👾Computer Won!";
+                    computer_score = computer_score + 1;
+                    document.getElementById("score").textContent= 'Player Score = ' + player_score + " || Computer Score = " + computer_score; 
+                }
+                else {
+                    document.getElementById("result").textContent = " ";
+                } }
+            function Clear() {
+                document.getElementById("result").textContent= ' '
+                document.getElementById("player").textContent= " "
+                document.getElementById("computer").textContent= ' '
+                document.getElementById('score').textContent= ' '
+                document.getElementById("win").textContent = ' '
+                player_score = 0;
+                computer_score = 0;
+            }    
+            function reset(){
+                player_score = 0;
+                computer_score = 0;
+                document.getElementById("player").textContent= " "
+                document.getElementById("computer").textContent= ' '
+                document.getElementById('score').textContent= ' '
+            }
+            const progressbar = document.getElementById("progressbar")
+            progress();
+            function progress() {
+                progressbar.value = Math.min(player_score, progressbar.max);
+                if (progressbar.value >= progressbar.max){
+                    result.innerHTML = "You Have Reached 100 Wins 🥳 <br> You are Lifeless. Get some job, Dude." 
+                    reset();
+                }
+            }
+        </script>
+    </body>
+</html>
